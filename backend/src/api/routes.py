@@ -3,40 +3,40 @@ from flask import Flask, jsonify
 from flask_cors import CORS
 from ..connectwise.client import ConnectWiseClient
 from ..monitoring.analyzer import TicketAnalyzer
+from datetime import datetime, timedelta
 
-# Create the Flask application instance
 app = Flask(__name__)
 CORS(app)
 
-# Initialize clients
 cw_client = ConnectWiseClient()
 analyzer = TicketAnalyzer(cw_client)
 
-@app.route('/')
-def home():
-    return jsonify({"message": "ConnectWise Monitor API"})
-
-@app.route('/api/patterns', methods=['GET'])
-def get_patterns():
+@app.route('/api/patterns/user', methods=['GET'])
+def get_user_patterns():
     try:
         patterns = analyzer.analyze_tickets()
-        return jsonify(patterns)
+        return jsonify({
+            'timestamp': datetime.now().isoformat(),
+            'patterns': patterns
+        })
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-@app.route('/api/stats', methods=['GET'])
-def get_stats():
+@app.route('/api/patterns/live', methods=['GET'])
+def get_live_patterns():
+    """Get patterns from the last hour for immediate analysis"""
     try:
-        tickets = cw_client.get_all_tickets()
-        
-        # Calculate basic stats
-        stats = {
-            'total_tickets': len(tickets),
-            'time_period': '7 Days',
-            'active_users': len(set(t.get('assignedTo', {}).get('name') for t in tickets if t.get('assignedTo'))),
-            'departments': len(set(t.get('team', {}).get('name') for t in tickets if t.get('team')))
-        }
-        
-        return jsonify(stats)
+        end_date = datetime.now()
+        start_date = end_date - timedelta(hours=1)
+        tickets = cw_client.get_tickets(start_date, end_date)
+        patterns = analyzer.analyze_tickets()
+        return jsonify({
+            'timestamp': datetime.now().isoformat(),
+            'ticket_count': len(tickets),
+            'patterns': patterns
+        })
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+
+if __name__ == '__main__':
+    app.run(debug=True)
