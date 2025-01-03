@@ -11,6 +11,10 @@ CORS(app)
 cw_client = ConnectWiseClient()
 analyzer = TicketAnalyzer(cw_client)
 
+@app.route('/')
+def home():
+    return jsonify({"message": "ConnectWise Monitor API"})
+
 @app.route('/api/patterns/user', methods=['GET'])
 def get_user_patterns():
     try:
