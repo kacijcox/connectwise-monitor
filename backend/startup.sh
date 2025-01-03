@@ -1,2 +1,5 @@
+# backend/startup.sh
 #!/bin/bash
-gunicorn --config gunicorn.conf.py src.api.routes:app
+cd /home/site/wwwroot
+gunicorn --bind=0.0.0.0 --timeout 600 src.api.routes:app &
+python monitor.py
