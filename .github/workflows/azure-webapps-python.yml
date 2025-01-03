@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 env:
-  AZURE_WEBAPP_NAME: connectwise-pattern-monitor-aubahmgnb0d4amck
+  AZURE_WEBAPP_NAME: connectwise-pattern-monitor    # Updated this line
   AZURE_WEBAPP_PACKAGE_PATH: '.'
   PYTHON_VERSION: '3.9'
 
