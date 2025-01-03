@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 env:
-  AZURE_WEBAPP_NAME: connectwise-pattern-monitor    # Updated this line
+  AZURE_WEBAPP_NAME: connectwise-pattern-monitor
   AZURE_WEBAPP_PACKAGE_PATH: '.'
   PYTHON_VERSION: '3.9'
 
@@ -51,7 +51,7 @@ jobs:
         with:
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
           package: backend
-          startup-command: 'cd /home/site/wwwroot && gunicorn --bind=0.0.0.0:8000 src.api.routes:app'
+          startup-command: 'gunicorn --bind=0.0.0.0:8000 --timeout 600 --access-logfile "-" --error-logfile "-" src.api.routes:app'
 
       - name: Azure logout
         run: |
