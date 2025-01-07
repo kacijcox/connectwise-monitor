@@ -1,6 +1,3 @@
-# backend/startup.sh
-#!/bin/bash
 cd /home/site/wwwroot
-gunicorn --bind=0.0.0.0:8000 "src.api.routes:app" &
-python monitor.py
-
+gunicorn --bind=0.0.0.0:8000 wsgi:app &  # Run web server
+python scheduler.py                        # Run scheduler
