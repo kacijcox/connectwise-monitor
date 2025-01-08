@@ -6,7 +6,7 @@ on:
  workflow_dispatch:
 
 env:
- AZURE_WEBAPP_NAME: connectwise-pattern-monitor
+ AZURE_WEBAPP_NAME: connectwise-pattern-monitor # Update with your new app name
  AZURE_WEBAPP_PACKAGE_PATH: '.'
  PYTHON_VERSION: '3.9'
 
@@ -22,11 +22,6 @@ jobs:
        with:
          python-version: ${{ env.PYTHON_VERSION }}
 
-     - name: Azure login
-       uses: azure/login@v1
-       with:
-         creds: ${{ secrets.AZURE_CREDENTIALS }}
-
      - name: Create and start virtual environment
        run: |
          python -m venv venv
@@ -38,7 +33,7 @@ jobs:
          python -m pip install --upgrade pip
          pip install -r requirements.txt
          pip install gunicorn
-         pip install -e .     # This will install your src package
+         pip install -e .
 
      - name: Building frontend
        run: |
@@ -51,8 +46,5 @@ jobs:
        uses: azure/webapps-deploy@v2
        with:
          app-name: ${{ env.AZURE_WEBAPP_NAME }}
+         publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
          package: backend
-
-     - name: Azure logout
-       run: |
-         az logout
