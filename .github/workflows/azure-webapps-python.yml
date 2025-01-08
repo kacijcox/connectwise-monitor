@@ -1,59 +1,59 @@
 name: Deploy to Azure Web App
 
 on:
-  push:
-    branches: [ "main" ]
-  workflow_dispatch:
+ push:
+   branches: [ "main" ]
+ workflow_dispatch:
 
 env:
-  AZURE_WEBAPP_NAME: connectwise-pattern-monitor
-  AZURE_WEBAPP_PACKAGE_PATH: '.'
-  PYTHON_VERSION: '3.9'
+ AZURE_WEBAPP_NAME: connectwise-pattern-monitor
+ AZURE_WEBAPP_PACKAGE_PATH: '.'
+ PYTHON_VERSION: '3.9'
 
 jobs:
-  build-and-deploy:
-    runs-on: ubuntu-latest
+ build-and-deploy:
+   runs-on: ubuntu-latest
 
-    steps:
-      - uses: actions/checkout@v3
+   steps:
+     - uses: actions/checkout@v3
 
-      - name: Set up Python version
-        uses: actions/setup-python@v3
-        with:
-          python-version: ${{ env.PYTHON_VERSION }}
+     - name: Set up Python version
+       uses: actions/setup-python@v3
+       with:
+         python-version: ${{ env.PYTHON_VERSION }}
 
-      - name: Azure login
-        uses: azure/login@v1
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
+     - name: Azure login
+       uses: azure/login@v1
+       with:
+         creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: Create and start virtual environment
-        run: |
-          python -m venv venv
-          source venv/bin/activate
+     - name: Create and start virtual environment
+       run: |
+         python -m venv venv
+         source venv/bin/activate
 
-      - name: Install dependencies
-        run: |
-          cd backend
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-          pip install gunicorn
-          pip install -e .     # This will install your src package
+     - name: Install dependencies
+       run: |
+         cd backend
+         python -m pip install --upgrade pip
+         pip install -r requirements.txt
+         pip install gunicorn
+         pip install -e .     # This will install your src package
 
-      - name: Building frontend
-        run: |
-          cd frontend
-          npm install
-          npm run build
-          cp -r dist ../backend/static
+     - name: Building frontend
+       run: |
+         cd frontend
+         npm install
+         npm run build
+         cp -r dist ../backend/static
 
-      - name: Deploy to Azure Web App
-        uses: azure/webapps-deploy@v2
-        with:
-          app-name: ${{ env.AZURE_WEBAPP_NAME }}
-          package: backend
-          startup-command: 'gunicorn --bind=0.0.0.0:8000 --timeout 600 --access-logfile "-" --error-logfile "-" src.api.routes:app'
+     - name: Deploy to Azure Web App
+       uses: azure/webapps-deploy@v2
+       with:
+         app-name: ${{ env.AZURE_WEBAPP_NAME }}
+         package: backend
+         startup-command: 'cd /home/site/wwwroot && PYTHONPATH=/home/site/wwwroot pip install -e . && gunicorn --bind=0.0.0.0:8000 wsgi:app'
 
-      - name: Azure logout
-        run: |
-          az logout
+     - name: Azure logout
+       run: |
+         az logout
