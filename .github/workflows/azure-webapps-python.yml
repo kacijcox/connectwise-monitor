@@ -38,11 +38,11 @@ jobs:
           pip install -e .
 
       - name: Building frontend
-        working-directory: ../frontend
+        working-directory: ./frontend
         run: |
           npm install
           npm run build
-          cp -r dist ../backend/static
+          cp -r dist ./backend/static
 
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v2
