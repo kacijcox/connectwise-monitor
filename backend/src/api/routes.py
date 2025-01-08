@@ -1,6 +1,6 @@
-# backend/src/api/routes.py
-from flask import Flask, jsonify
+from flask import Flask, jsonify, send_from_directory
 from flask_cors import CORS
+from flask import send_from_directory
 from ..connectwise.client import ConnectWiseClient
 from ..monitoring.analyzer import TicketAnalyzer
 from datetime import datetime, timedelta
@@ -41,6 +41,10 @@ def get_live_patterns():
         })
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+
+@app.route('/<path:path>')
+def serve_static(path):
+    return send_from_directory('static', path)
 
 if __name__ == '__main__':
     app.run(debug=True)
