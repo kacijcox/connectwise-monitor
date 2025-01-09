@@ -10,12 +10,14 @@ CORS(app)
 cw_client = ConnectWiseClient()
 analyzer = TicketAnalyzer(cw_client)
 
+# Changed: Removed old home route and added new root route that serves index.html
 @app.route('/', defaults={'path': 'index.html'})
 @app.route('/<path:path>')
 def serve_static(path):
-   if path == "":
-       path = "index.html"
-   return send_from_directory('static', path)
+   try:
+       return send_from_directory('static', path)
+   except:
+       return send_from_directory('static', 'index.html')
 
 @app.route('/api/patterns/user', methods=['GET'])
 def get_user_patterns():
