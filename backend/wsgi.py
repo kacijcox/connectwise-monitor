@@ -1,4 +1,4 @@
-# backend/app.py
+# backend/wsgi.py
 from src.api.routes import app
 
 if __name__ == '__main__':
