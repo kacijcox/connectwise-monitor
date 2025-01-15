@@ -42,6 +42,7 @@ jobs:
           npm run build
           mkdir -p ../backend/static
           cp -r dist/* ../backend/static/
+          ls -la ../backend/static/
 
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v2
