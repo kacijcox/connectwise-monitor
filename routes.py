@@ -1,7 +1,7 @@
 from flask import Flask, jsonify
 from flask_cors import CORS
-from ..connectwise.client import ConnectWiseClient
-from ..monitoring.analyzer import TicketAnalyzer
+from backend.src.connectwise.client import ConnectWiseClient
+from backend.src.monitoring.analyzer import TicketAnalyzer
 from datetime import datetime, timedelta
 
 app = Flask(__name__)
@@ -38,6 +38,26 @@ def get_live_patterns():
             'ticket_count': len(tickets),
             'patterns': patterns
         })
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/test-email', methods=['GET'])
+def test_email():
+    try:
+        # Create a dummy pattern for testing
+        dummy_pattern = {
+            'user': 'Test User',
+            'ticket_count': 3,
+            'time_period': '3 days',
+            'issue_type': 'Test Issue',
+            'significance': 'high',
+            'user_impact': 'This is a test pattern for email functionality.'
+        }
+        
+        # Send the test email
+        analyzer.claude.send_pattern_email('Test User', dummy_pattern)
+        
+        return jsonify({'message': 'Test email sent successfully.'})
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
