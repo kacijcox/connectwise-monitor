@@ -1,6 +1,6 @@
 # ConnectWise Monitor
 
-The ConnectWise Monitor is an application that analyzes support tickets from ConnectWise PSA to identify patterns and potential root causes leveraging Claude. It helps service desk teams gain insights into recurring issues and improve their support processes.
+The ConnectWise Monitor is an application that analyzes support tickets from ConnectWise PSA to identify patterns and potential root causes leveraging Claude. It helps IT teams gain insights into recurring issues and improve their support processes.
 
 ## Features
 
