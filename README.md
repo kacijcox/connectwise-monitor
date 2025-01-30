@@ -18,7 +18,7 @@ The ConnectWise Root Cause Analyzer is an application that analyzes support tick
 ## Installation
 
 1. Clone the repository:
-   - git clone https://github.com/yourusername/connectwise-rootcause-analyzer.git
+   - git clone https://github.com/kacijcox/connectwise-rootcause-analyzer.git
 2. Install the required dependencies:
    -pip install -r requirements.txt
 3. Set up the environment variables:
