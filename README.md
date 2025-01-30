@@ -1,6 +1,6 @@
-# ConnectWise Root Cause Analyzer
+# ConnectWise Pattern Analyzer
 
-The ConnectWise Root Cause Analyzer is an application that analyzes support tickets from ConnectWise PSA to identify patterns and potential root causes. It helps service desk teams gain insights into recurring issues and improve their support processes.
+The ConnectWise Pattern Analyzer is an application that analyzes support tickets from ConnectWise PSA to identify patterns. It helps service desk teams gain insights into recurring issues and improve their support processes.
 
 ## Features
 
@@ -18,7 +18,7 @@ The ConnectWise Root Cause Analyzer is an application that analyzes support tick
 ## Installation
 
 1. Clone the repository:
-   - git clone https://github.com/yourusername/connectwise-rootcause-analyzer.git
+   - git clone https://github.com/kacijcox/connectwise-monitor.git
 2. Install the required dependencies:
    -pip install -r requirements.txt
 3. Set up the environment variables:
