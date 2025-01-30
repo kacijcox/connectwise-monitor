@@ -1,6 +1,6 @@
 # ConnectWise Root Cause Analyzer
 
-The ConnectWise Root Cause Analyzer is an application that analyzes support tickets from ConnectWise PSA to identify patterns and potential root causes. It helps service desk teams gain insights into recurring issues and improve their support processes.
+The ConnectWise Root Cause Analyzer is an application that analyzes support tickets from ConnectWise PSA to identify patterns and potential root causes leveraging Claude. It helps service desk teams gain insights into recurring issues and improve their support processes.
 
 ## Features
 
@@ -8,6 +8,7 @@ The ConnectWise Root Cause Analyzer is an application that analyzes support tick
 - Analyzes tickets to identify patterns and trends
 - Sends email notifications when significant patterns are detected
 - Provides a web interface for viewing analysis results
+  
 
 ## Prerequisites
 
